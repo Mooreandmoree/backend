@@ -1,0 +1,13 @@
+package com.nairaflow;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@SpringBootApplication
+@EnableScheduling
+public class NairaFlowApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(NairaFlowApplication.class, args);
+    }
+}
