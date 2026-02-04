@@ -48,4 +48,34 @@ public class AdminController {
         return ResponseEntity.ok(fxService.updateRate(request.getRate(), userDetails.getUsername()));
     }
 
+    @GetMapping("/fx/rate/history")
+    public ResponseEntity<List<RateHistoryResponse>> getRateHistory(
+            @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(fxService.getRateHistory(limit));
+    }
+
+    @GetMapping("/dashboard/stats")
+    public ResponseEntity<DashboardStats> getDashboardStats() {
+        DashboardStats stats = new DashboardStats();
+        stats.setTotalUsers(userRepository.count());
+        stats.setTotalTransactions(transactionRepository.count());
+        // You can add more stats as needed
+        return ResponseEntity.ok(stats);
+    }
+
+    @GetMapping("/audit/logs")
+    public ResponseEntity<Page<AuditLog>> getAuditLogs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return ResponseEntity.ok(auditService.getAuditLogs(pageRequest));
+    }
+
+    @GetMapping("/transactions")
+    public ResponseEntity<Page<Transaction>> getAllTransactions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return ResponseEntity.ok(transactionRepository.findAll(pageRequest));
+    }
 }
